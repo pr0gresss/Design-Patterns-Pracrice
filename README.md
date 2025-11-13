@@ -59,3 +59,15 @@ Figures are loaded from:
 Each line contains numeric parameters; invalid lines are skipped and logged.
 
 ---
+
+## ✏ Input format
+#### Sphere: 
+```bash
+centerX centerY centerZ radius
+```
+
+#### Oval:
+```bash
+upperLeftCornerX upperLeftCornerY bottomRightCornerX bottomRightCornerY
+```
+---
