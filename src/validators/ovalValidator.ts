@@ -3,7 +3,7 @@ export class OvalValidator {
 		upperLeftPointX: number,
 		upperLeftPointY: number,
 		bottomRightPointX: number,
-		bottomRightPointY: number
+		bottomRightPointY: number,
 	): boolean {
 		return (
 			upperLeftPointX !== bottomRightPointX &&

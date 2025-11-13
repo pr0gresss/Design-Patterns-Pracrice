@@ -2,8 +2,8 @@
 	"compilerOptions": {
 		"outDir": "./dist",
 		"module": "commonjs",
-		"target": "ES2020",
-		"types": ["node"],
+		"target": "ES2022",
+		"types": ["node", "jest"],
 		"sourceMap": true,
 		"declaration": true,
 		"declarationMap": true,
@@ -15,6 +15,6 @@
 		"moduleDetection": "force",
 		"skipLibCheck": true
 	},
-	"include": ["src/**/*"],
-	"exclude": ["node_modules", "dist", "**/*.test.ts"]
+	"include": ["src/**/*", "**/*.test.ts"],
+	"exclude": ["node_modules", "dist"]
 }

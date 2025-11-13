@@ -1,21 +1,21 @@
-import {Oval} from "../entities/oval";
-import {Point} from "../entities/point";
+import type { Oval } from "../entities/Oval";
+import { Point } from "../entities/Point";
 
-export class OvalSerice {
+export class OvalService {
 	public static isOval(oval: Oval): boolean {
-		const {semiAxisX, semiAxisY} = this.getAxes(oval);
+		const { semiAxisX, semiAxisY } = this.getAxes(oval);
 
 		return semiAxisX > 0 && semiAxisY > 0;
 	}
 
 	public static isCircle(oval: Oval): boolean {
-		const {semiAxisX, semiAxisY} = this.getAxes(oval);
+		const { semiAxisX, semiAxisY } = this.getAxes(oval);
 
 		return semiAxisX > 0 && semiAxisY > 0 && semiAxisX === semiAxisY;
 	}
 
 	public static getPerimeter(oval: Oval): number {
-		const {semiAxisX, semiAxisY} = this.getAxes(oval);
+		const { semiAxisX, semiAxisY } = this.getAxes(oval);
 
 		const h =
 			Math.pow(semiAxisX - semiAxisY, 2) / Math.pow(semiAxisX + semiAxisY, 2);
@@ -27,12 +27,18 @@ export class OvalSerice {
 		);
 	}
 
+	public static getArea(oval: Oval): number {
+		const { semiAxisX, semiAxisY } = this.getAxes(oval);
+
+		return Math.abs(Math.PI * semiAxisX * semiAxisY);
+	}
+
 	public static intersectsOneAxis(oval: Oval, distance: number): boolean {
-		const {semiAxisX, semiAxisY} = this.getAxes(oval);
+		const { semiAxisX, semiAxisY } = this.getAxes(oval);
 
 		const center = new Point(
 			(oval.upperLeftCorner.x + oval.bottomRightCorner.x) / 2,
-			(oval.upperLeftCorner.y + oval.bottomRightCorner.y) / 2
+			(oval.upperLeftCorner.y + oval.bottomRightCorner.y) / 2,
 		);
 
 		const intersectsX =
@@ -49,6 +55,6 @@ export class OvalSerice {
 		const semiAxisY =
 			Math.abs(oval.upperLeftCorner.y - oval.bottomRightCorner.y) / 2;
 
-		return {semiAxisX, semiAxisY};
+		return { semiAxisX, semiAxisY };
 	}
 }

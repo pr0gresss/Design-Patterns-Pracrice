@@ -1,10 +1,10 @@
-import {Point3D} from "./point3D";
-import {Shape} from "./shape";
+import type { Point3D } from "./Point3D";
+import { Shape } from "./Shape";
 
 export class Sphere extends Shape {
 	constructor(
-		public readonly point3D: Point3D,
-		public readonly radius: number
+		public readonly centerPoint: Point3D,
+		public readonly radius: number,
 	) {
 		super("Sphere");
 	}
