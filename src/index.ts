@@ -51,11 +51,12 @@ import { logger } from "./utilities/logger";
 	}
 })();
 
-function processOvalParameters(ovalParameters: number[]): Oval {
+function processOvalParameters(ovalParameters: number[]): Oval | null {
 	if (ovalParameters.length !== 4 || ovalParameters.some(p => !isFinite(p))) {
 		logger.warn(
 			`Skipping invalid sphere parameters: ${ovalParameters.join(" ")}`,
 		);
+		return null;
 	}
 
 	const [
@@ -72,10 +73,12 @@ function processOvalParameters(ovalParameters: number[]): Oval {
 		bottomRightPointY,
 	);
 
+	logger.info(`Created oval with following parameters: ${ovalParameters}`);
+
 	return oval;
 }
 
-function processSphereParameters(sphereParameters: number[]): Sphere {
+function processSphereParameters(sphereParameters: number[]): Sphere | null {
 	if (
 		sphereParameters.length !== 4 ||
 		sphereParameters.some(p => !isFinite(p))
@@ -83,6 +86,7 @@ function processSphereParameters(sphereParameters: number[]): Sphere {
 		logger.warn(
 			`Skipping invalid sphere parameters: ${sphereParameters.join(" ")}`,
 		);
+		return null;
 	}
 
 	const [centerPointX, centerPointY, centerPointZ, radius] =
@@ -94,6 +98,8 @@ function processSphereParameters(sphereParameters: number[]): Sphere {
 		centerPointZ,
 		radius,
 	);
+
+	logger.info(`Created sphere with following parameters: ${sphereParameters}`);
 
 	return sphere;
 }
