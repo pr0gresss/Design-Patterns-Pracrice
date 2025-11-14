@@ -18,7 +18,6 @@ export class OvalFactory {
 				bottomRightPointY,
 			)
 		) {
-			// Custom Exception...
 			throw new OvalValidationError(
 				`Invalid oval parameters: (${upperLeftPointX}, ${upperLeftPointY}), (${bottomRightPointX}, ${bottomRightPointY})`,
 			);

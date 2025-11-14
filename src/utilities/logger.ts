@@ -4,7 +4,7 @@ import { join } from "path";
 import { existsSync, mkdirSync } from "fs";
 
 const logDir = join(__dirname, "../../logs");
-const logFileName = new Date().toString();
+const logFileName = new Date().toLocaleDateString();
 
 if (!existsSync(logDir)) {mkdirSync(logDir);}
 

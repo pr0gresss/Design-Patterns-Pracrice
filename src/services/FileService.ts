@@ -15,7 +15,6 @@ export class FileService {
 		try {
 			return line.split(delimeter).map(Number);
 		} catch (error) {
-			// Another Exception...
 			throw new ReadParametersError(`Error while reading arguments: ${error}`);
 		}
 	}
