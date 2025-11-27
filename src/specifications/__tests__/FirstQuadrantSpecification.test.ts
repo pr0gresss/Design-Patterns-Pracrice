@@ -3,6 +3,7 @@ import { Oval } from "../../entities/Oval";
 import { Sphere } from "../../entities/Sphere";
 import { Point } from "../../entities/Point";
 import { Point3D } from "../../entities/Point3D";
+import { Shape } from "../../entities/Shape";
 
 describe("FirstQuadrantSpecification", () => {
 	const spec = new FirstQuadrantSpecification();
@@ -50,6 +51,16 @@ describe("FirstQuadrantSpecification", () => {
 			const sphere = new Sphere(new Point3D(2, 2, 1), 2);
 
 			expect(spec.isSatisfiedBy(sphere)).toBe(false);
+		});
+
+		it("returns false when passed unknown shape", () => {
+			class Weird extends Shape {
+				constructor() {
+					super("Weird");
+				}
+			}
+
+			expect(spec.isSatisfiedBy(new Weird())).toBe(false);
 		});
 	});
 });
