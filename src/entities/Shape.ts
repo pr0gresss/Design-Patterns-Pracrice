@@ -18,7 +18,7 @@ export abstract class Shape implements Observable<Shape> {
 	}
 
 	public unsubscribe(observer: Observer<Shape>): void {
-		this.observers.filter(o => o !== observer);
+		this.observers = this.observers.filter(o => o !== observer);
 	}
 
 	public notify(): void {
