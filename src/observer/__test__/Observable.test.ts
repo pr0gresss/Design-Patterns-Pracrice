@@ -38,7 +38,7 @@ describe("Observable / Observer", () => {
 		const oval = new Oval(new Point(1, 2), new Point(5, 6));
 		oval.id = "oval-1";
 
-		const updated: any[] = [];
+		const updated: unknown[] = [];
 
 		const observer: Observer<Oval> = {
 			update(shape) {
@@ -59,8 +59,8 @@ describe("Observable / Observer", () => {
 		const sphere = new Sphere(new Point3D(0, 0, 0), 10);
 		sphere.id = "sphere-1";
 
-		const callsA: any[] = [];
-		const callsB: any[] = [];
+		const callsA: unknown[] = [];
+		const callsB: unknown[] = [];
 
 		const obsA: Observer<Sphere> = { update: s => callsA.push(s) };
 		const obsB: Observer<Sphere> = { update: s => callsB.push(s) };
@@ -82,7 +82,7 @@ describe("Observable / Observer", () => {
 		const oval = new Oval(new Point(10, 10), new Point(20, 20));
 		oval.id = "oval-xyz";
 
-		const calls: any[] = [];
+		const calls: unknown[] = [];
 
 		const observer: Observer<Oval> = {
 			update(shape) {
@@ -108,7 +108,7 @@ describe("Observable / Observer", () => {
 		oval1.id = "o1";
 		oval2.id = "o2";
 
-		const received: any[] = [];
+		const received: unknown[] = [];
 
 		const obs: Observer<Oval> = {
 			update(shape) {
