@@ -2,9 +2,9 @@ import type { Point } from "./Point";
 import { Shape } from "./Shape";
 
 export class Oval extends Shape {
-	constructor(
-		public readonly upperLeftCorner: Point,
-		public readonly bottomRightCorner: Point,
+	public constructor(
+		public upperLeftCorner: Point,
+		public bottomRightCorner: Point,
 	) {
 		super("Oval");
 	}

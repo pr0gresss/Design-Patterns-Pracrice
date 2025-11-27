@@ -1,18 +1,23 @@
 import type { Sphere } from "../entities/Sphere";
+import type { IShapeService } from "./IShapeService";
 
-export class SphereService {
-	public static isSphere(sphere: Sphere): boolean {
+export class SphereService implements IShapeService<Sphere> {
+	public getPerimeter(_: Sphere): number {
+		return 0;
+	}
+
+	public isSphere(sphere: Sphere): boolean {
 		return sphere.radius > 0 && Number.isFinite(sphere.radius);
 	}
-	public static getSurfaceArea(sphere: Sphere): number {
+	public getArea(sphere: Sphere): number {
 		return 4 * Math.PI * sphere.radius ** 2;
 	}
 
-	public static getVolume(sphere: Sphere): number {
+	public getVolume(sphere: Sphere): number {
 		return (4 / 3) * Math.PI * sphere.radius ** 3;
 	}
 
-	public static touchesCoordinateAxis(sphere: Sphere): boolean {
+	public touchesCoordinateAxis(sphere: Sphere): boolean {
 		const { x, y, z } = sphere.centerPoint;
 		return (
 			Math.abs(x) === sphere.radius ||
@@ -21,7 +26,7 @@ export class SphereService {
 		);
 	}
 
-	public static volumeRatioByAxis(
+	public volumeRatioByAxis(
 		sphere: Sphere,
 		axis: "x" | "y" | "z",
 	): number {

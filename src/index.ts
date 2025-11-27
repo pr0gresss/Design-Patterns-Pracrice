@@ -1,14 +1,16 @@
 import type { Oval } from "./entities/Oval";
+import { Point } from "./entities/Point";
 import type { Sphere } from "./entities/Sphere";
 import { OvalFactory } from "./factories/OvalFactory";
 import { SphereFactory } from "./factories/SphereFactory";
+import { ShapeRepository } from "./repositories/ShapeRepository";
 import { FileService } from "./services/FileService";
-import { OvalService } from "./services/OvalService";
-import { SphereService } from "./services/SphereService";
 import { logger } from "./utilities/logger";
+import { Warehouse } from "./warehouse/Warehouse";
 
 (async () => {
 	const fileService = new FileService();
+	const shapeRepository = new ShapeRepository();
 
 	const sphereLines = await fileService.readLinesAsync(
 		"./data/sample_spheres.txt",
@@ -25,7 +27,8 @@ import { logger } from "./utilities/logger";
 				continue;
 			}
 
-			analyzeSphere(sphere);
+			shapeRepository.add(sphere);
+
 		} catch (error) {
 			logger.error(error);
 			continue;
@@ -43,15 +46,20 @@ import { logger } from "./utilities/logger";
 				continue;
 			}
 
-			analyzeOval(oval);
+			shapeRepository.add(oval);
+
 		} catch (error) {
 			logger.error(error);
 			continue;
 		}
 	}
+
+	logger.info(shapeRepository.getAll());
 })();
 
 function processOvalParameters(ovalParameters: number[]): Oval | null {
+	const wareHouse = Warehouse.getInstance();
+
 	if (ovalParameters.length !== 4 || ovalParameters.some(p => !isFinite(p))) {
 		logger.warn(
 			`Skipping invalid sphere parameters: ${ovalParameters.join(" ")}`,
@@ -74,11 +82,19 @@ function processOvalParameters(ovalParameters: number[]): Oval | null {
 	);
 
 	logger.info(`Created oval with following parameters: ${ovalParameters}`);
+	oval.subscribe(wareHouse);
+	oval.changed();
+	logger.info(wareHouse.getArea(oval.id));
+
+	oval.upperLeftCorner = new Point(4,2);
+	oval.changed();
+	logger.info(wareHouse.getArea(oval.id));
 
 	return oval;
 }
 
 function processSphereParameters(sphereParameters: number[]): Sphere | null {
+	const wareHouse = Warehouse.getInstance();
 	if (
 		sphereParameters.length !== 4 ||
 		sphereParameters.some(p => !isFinite(p))
@@ -100,38 +116,14 @@ function processSphereParameters(sphereParameters: number[]): Sphere | null {
 	);
 
 	logger.info(`Created sphere with following parameters: ${sphereParameters}`);
+	sphere.subscribe(wareHouse);
+	sphere.changed();
+	logger.info(wareHouse.getArea(sphere.id));
+
+	sphere.radius = 10;
+	sphere.changed();
+	logger.info(wareHouse.getArea(sphere.id));
+
 
 	return sphere;
-}
-
-function analyzeOval(oval: Oval) {
-	logger.info(`Area: ${OvalService.getArea(oval)}`);
-	logger.info(`Perimeter: ${OvalService.getPerimeter(oval)}`);
-	logger.info(`Is oval?: ${OvalService.isOval(oval)}`);
-	logger.info(
-		`Intersects one axis (distance = 10)?:  ${OvalService.intersectsOneAxis(
-			oval,
-			10,
-		)}`,
-	);
-	logger.info(`Is circle?: ${OvalService.isCircle(oval)}`);
-}
-
-function analyzeSphere(sphere: Sphere) {
-	logger.info(`Volume: ${SphereService.getVolume(sphere)}`);
-	logger.info(`Surface area: ${SphereService.getSurfaceArea(sphere)}`);
-	logger.info(`Is sphere?: ${SphereService.isSphere(sphere)}`);
-	logger.info(
-		`Volume ratio by X axis: ${SphereService.volumeRatioByAxis(sphere, "x")}`,
-	);
-	logger.info(
-		`Volume ratio by Y axis: ${SphereService.volumeRatioByAxis(sphere, "y")}`,
-	);
-	logger.info(
-		`Volume ratio by Z axis: ${SphereService.volumeRatioByAxis(sphere, "z")}`,
-	);
-	logger.info(
-		`Touches coordinate axis?: ${SphereService.touchesCoordinateAxis(sphere)}`,
-	);
-	logger.info(`Is sphere?: ${SphereService.isSphere(sphere)}`);
 }

@@ -9,34 +9,40 @@ function makeOval(x1: number, y1: number, x2: number, y2: number): Oval {
 }
 
 describe("OvalService", () => {
+	let service: OvalService;
+
+	beforeEach(() => {
+		service = new OvalService();
+	});
+
 	describe("isOval", () => {
 		it("returns true when both semi-axes are positive", () => {
 			const oval = makeOval(0, 0, 10, 6);
-			expect(OvalService.isOval(oval)).toBe(true);
+			expect(service.isOval(oval)).toBe(true);
 		});
 
 		it("returns false when one semi-axis is zero", () => {
 			const oval = makeOval(0, 0, 0, 5);
-			expect(OvalService.isOval(oval)).toBe(false);
+			expect(service.isOval(oval)).toBe(false);
 		});
 	});
 
 	describe("isCircle", () => {
 		it("returns true when semi-axes are equal and positive", () => {
 			const oval = makeOval(0, 0, 10, 10);
-			expect(OvalService.isCircle(oval)).toBe(true);
+			expect(service.isCircle(oval)).toBe(true);
 		});
 
 		it("returns false when semi-axes differ", () => {
 			const oval = makeOval(0, 0, 10, 8);
-			expect(OvalService.isCircle(oval)).toBe(false);
+			expect(service.isCircle(oval)).toBe(false);
 		});
 	});
 
 	describe("getPerimeter", () => {
 		it("returns a positive number close to theoretical circumference", () => {
 			const oval = makeOval(0, 0, 10, 6);
-			const perimeter = OvalService.getPerimeter(oval);
+			const perimeter = service.getPerimeter(oval);
 			expect(perimeter).toBeGreaterThan(0);
 			expect(perimeter).toBeCloseTo(25, -1);
 		});
@@ -45,7 +51,7 @@ describe("OvalService", () => {
 	describe("getArea", () => {
 		it("calculates the correct area", () => {
 			const oval = makeOval(0, 0, 10, 6);
-			const area = OvalService.getArea(oval);
+			const area = service.getArea(oval);
 			const expected = Math.PI * 5 * 3;
 			expect(area).toBeCloseTo(expected);
 		});
@@ -54,14 +60,12 @@ describe("OvalService", () => {
 	describe("intersectsOneAxis", () => {
 		it("returns true when only one axis intersects the distance line", () => {
 			const oval = makeOval(0, 0, 10, 4);
-
-			expect(OvalService.intersectsOneAxis(oval, 5)).toBe(true);
+			expect(service.intersectsOneAxis(oval, 5)).toBe(true);
 		});
 
 		it("returns false when both axes intersect", () => {
 			const oval = makeOval(0, 0, 10, 10);
-			expect(OvalService.intersectsOneAxis(oval, 5)).toBe(false);
+			expect(service.intersectsOneAxis(oval, 5)).toBe(false);
 		});
 	});
-
 });

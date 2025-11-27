@@ -3,25 +3,27 @@ import { Sphere } from "../../entities/Sphere";
 import { Point3D } from "../../entities/Point3D";
 
 function makeSphere(x: number, y: number, z: number, r: number): Sphere {
-	const centerPoint = new Point3D(x, y, z);
-	return new Sphere(centerPoint, r);
+	return new Sphere(new Point3D(x, y, z), r);
 }
 
 describe("SphereService", () => {
+	let service: SphereService;
+
+	beforeEach(() => {
+		service = new SphereService();
+	});
+
 	describe("isSphere", () => {
 		it("returns true for positive finite radius", () => {
-			const sphere = makeSphere(0, 0, 0, 5);
-			expect(SphereService.isSphere(sphere)).toBe(true);
+			expect(service.isSphere(makeSphere(0, 0, 0, 5))).toBe(true);
 		});
 
 		it("returns false for zero radius", () => {
-			const sphere = makeSphere(0, 0, 0, 0);
-			expect(SphereService.isSphere(sphere)).toBe(false);
+			expect(service.isSphere(makeSphere(0, 0, 0, 0))).toBe(false);
 		});
 
 		it("returns false for infinite radius", () => {
-			const sphere = makeSphere(0, 0, 0, Infinity);
-			expect(SphereService.isSphere(sphere)).toBe(false);
+			expect(service.isSphere(makeSphere(0, 0, 0, Infinity))).toBe(false);
 		});
 	});
 
@@ -29,7 +31,7 @@ describe("SphereService", () => {
 		it("computes correct surface area", () => {
 			const sphere = makeSphere(0, 0, 0, 3);
 			const expected = 4 * Math.PI * 3 ** 2;
-			expect(SphereService.getSurfaceArea(sphere)).toBeCloseTo(expected);
+			expect(service.getArea(sphere)).toBeCloseTo(expected);
 		});
 	});
 
@@ -37,36 +39,31 @@ describe("SphereService", () => {
 		it("computes correct volume", () => {
 			const sphere = makeSphere(0, 0, 0, 3);
 			const expected = (4 / 3) * Math.PI * 3 ** 3;
-			expect(SphereService.getVolume(sphere)).toBeCloseTo(expected);
+			expect(service.getVolume(sphere)).toBeCloseTo(expected);
 		});
 	});
 
 	describe("touchesCoordinateAxis", () => {
 		it("returns true when sphere touches an axis", () => {
-			const sphere = makeSphere(5, 0, 0, 5);
-			expect(SphereService.touchesCoordinateAxis(sphere)).toBe(true);
+			expect(service.touchesCoordinateAxis(makeSphere(5, 0, 0, 5))).toBe(true);
 		});
 
 		it("returns false when sphere does not touch any axis", () => {
-			const sphere = makeSphere(2, 2, 2, 1);
-			expect(SphereService.touchesCoordinateAxis(sphere)).toBe(false);
+			expect(service.touchesCoordinateAxis(makeSphere(2, 2, 2, 1))).toBe(false);
 		});
 	});
 
 	describe("volumeRatioByAxis", () => {
-		it("returns Infinity when sphere does not intersect given axis", () => {
-			const sphere = makeSphere(10, 0, 0, 5);
-			expect(SphereService.volumeRatioByAxis(sphere, "x")).toBe(Infinity);
+		it("returns Infinity when sphere does not intersect the axis", () => {
+			expect(service.volumeRatioByAxis(makeSphere(10, 0, 0, 5), "x")).toBe(Infinity);
 		});
 
-		it("returns 1 when center lies on the axis", () => {
-			const sphere = makeSphere(0, 0, 0, 5);
-			expect(SphereService.volumeRatioByAxis(sphere, "x")).toBeCloseTo(1);
+		it("returns 1 when center lies on axis", () => {
+			expect(service.volumeRatioByAxis(makeSphere(0, 0, 0, 5), "x")).toBeCloseTo(1);
 		});
 
 		it("returns smaller ratio for off-center sphere", () => {
-			const sphere = makeSphere(3, 0, 0, 5);
-			const ratio = SphereService.volumeRatioByAxis(sphere, "x");
+			const ratio = service.volumeRatioByAxis(makeSphere(3, 0, 0, 5), "x");
 			expect(ratio).toBeGreaterThan(0);
 			expect(ratio).toBeLessThan(1);
 		});

@@ -3,8 +3,8 @@ import { Shape } from "./Shape";
 
 export class Sphere extends Shape {
 	constructor(
-		public readonly centerPoint: Point3D,
-		public readonly radius: number,
+		public centerPoint: Point3D,
+		public radius: number,
 	) {
 		super("Sphere");
 	}
