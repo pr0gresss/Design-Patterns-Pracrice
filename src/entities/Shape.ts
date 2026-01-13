@@ -1,6 +1,13 @@
+import type { Renderer } from "../renderers/Renderer";
+import type { ShapeVisitor } from "../visitors/ShapeVisitor";
+
 export abstract class Shape {
-	public name: string;
-	constructor(name: string) {
-		this.name = name;
+	protected renderer: Renderer;
+
+	constructor(renderer: Renderer) {
+		this.renderer = renderer;
 	}
+
+	abstract accept(visitor: ShapeVisitor): void;
+	abstract draw(): void;
 }
