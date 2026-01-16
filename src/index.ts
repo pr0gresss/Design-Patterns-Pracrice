@@ -18,7 +18,7 @@ rectangle.draw();
 const areaVisitor = new AreaVisitor();
 const perimeterVisitor = new PerimeterVisitor();
 
-console.log("Using visitor to get shapes areas: ");
+console.log("\nUsing visitor to get shapes areas: ");
 circle.accept(areaVisitor);
 rectangle.accept(areaVisitor);
 

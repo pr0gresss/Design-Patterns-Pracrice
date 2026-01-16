@@ -23,10 +23,7 @@ export class Rectangle extends Shape {
 	}
 
 	draw(): void {
-		this.renderer.drawShape(
-			"Rectangle",
-			`x:${this.x}, y:${this.y}, width:${this.width}, height:${this.height}`,
-		);
+		this.renderer.drawRectangle(this);
 	}
 
 	accept(visitor: ShapeVisitor): void {

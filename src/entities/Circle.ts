@@ -15,7 +15,7 @@ export class Circle extends Shape {
 	}
 
 	draw(): void {
-		this.renderer.drawShape("Circle", `x:${this.x}, y:${this.y}, radius:${this.radius}`);
+		this.renderer.drawCircle(this);
 	}
 
 	accept(visitor: ShapeVisitor): void {
