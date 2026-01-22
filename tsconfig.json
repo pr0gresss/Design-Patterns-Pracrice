@@ -3,7 +3,7 @@
 		"outDir": "./dist",
 		"module": "commonjs",
 		"target": "ES2022",
-		"types": ["node", "jest"],
+		"types": ["node"],
 		"sourceMap": true,
 		"declaration": true,
 		"declarationMap": true,
